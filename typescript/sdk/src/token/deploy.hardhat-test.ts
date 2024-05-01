@@ -175,30 +175,34 @@ describe('TokenDeployer', async () => {
   });
 
   describe('EvmERC20WarpRouteReader', async () => {
-    let evmERC20WarpCrudModule: EvmERC20WarpCrudModule;
-
+    let config: TokenRouterConfig;
     let mailbox: Mailbox;
+
     before(async () => {
       mailbox = Mailbox__factory.connect(baseConfig.mailbox, signer);
-      evmERC20WarpCrudModule = new EvmERC20WarpCrudModule(multiProvider, {
-        addresses: {},
-        chain: Chains.test1,
-        chainMetadataManager,
-        config: {},
-      });
     });
     describe('Create', async () => {
       it('should create with a config', async () => {
-        const config: TokenRouterConfig = {
+        // Create config and deploy using WarpCrudModule
+        config = {
           type: TokenType.collateral,
           token: token.address,
           hook: await mailbox.defaultHook(),
           ...baseConfig,
         };
+        const evmERC20WarpCrudModule = await EvmERC20WarpCrudModule.create({
+          chain,
+          config,
+          multiProvider,
+        });
 
-        await evmERC20WarpCrudModule.create(config);
-
-        // Take a config, pass it into create, it should deploy
+        // Let's derive it's onchain token type
+        const { collateral } = evmERC20WarpCrudModule.serialize();
+        const tokenType: TokenType =
+          await evmERC20WarpCrudModule.reader.deriveTokenType(
+            collateral.address,
+          );
+        expect(tokenType).to.equal(TokenType.collateral);
       });
       // it('should create with an ISM string', async () => {
       // });
