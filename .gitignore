@@ -1,31 +1,43 @@
-node_modules
-test_deploy.env
+# System files
+.DS_Store
+*.swp
+*.swo
 
-**/.env
-**/tsconfig.tsbuildinfo
-**/tmp.*
-**/*.swp
-**/*.swo
-
-rust/tmp_db
-rust/tmp.env
-tmp.env
-.DS_STORE
-
-# Built Helm dependencies
-**/helm/**/charts/*.tgz
-
-typescript/*/node_modules
-typescript/infra/config/environments/test/create2/*json
-typescript/infra/config/environments/test/testrecipient/*json
-solidity/artifacts
-
+# Node.js modules and logs
+**/node_modules/
+yarn-error.log
 .yarn/install-state.gz
 .yarn/cache
-yarn-error.log
 
-.idea
-**/*.ignore
-.vscode
-
+# TypeScript build artifacts
+**/tsconfig.tsbuildinfo
 tsconfig.editor.json
+
+# Temporary files and directories
+**/tmp.*
+**/tmp_db/
+tmp.env
+test_deploy.env
+
+# Environment configuration files
+**/.env
+
+# IDE settings
+.idea/
+.vscode/
+
+# Solidity artifacts
+solidity/artifacts/
+
+# TypeScript specific ignores
+typescript/*/node_modules/
+typescript/infra/config/environments/test/create2/*.json
+typescript/infra/config/environments/test/testrecipient/*.json
+
+# Helm chart packages
+**/helm/**/charts/*.tgz
+
+# Ignore specific files that are likely added by mistake or commonly ignored
+**/*.ignore
+
+# Add additional comments or specific ignores below as needed
